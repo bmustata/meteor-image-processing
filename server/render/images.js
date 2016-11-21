@@ -13,6 +13,11 @@ Meteor.startup(function () {
 
     console.log("render/images startup");
 
+    Picker.middleware(function (req, res, next) {
+        console.log('Debug: \nurl=', req.url, "\noriginalUrl=", req.originalUrl);
+        next()
+    });
+
     var connect = new imgSteam.http.Connect(streamOption);
     Picker.middleware(connect.getHandler());
 
