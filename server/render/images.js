@@ -13,15 +13,25 @@ Meteor.startup(function () {
 
     console.log("render/images startup");
 
-    Picker.middleware(function (req, res, next) {
+    // Picker.middleware(function (req, res, next) {
+    //     console.log('Debug: \nurl=', req.url, "\noriginalUrl=", req.originalUrl);
+    //     next()
+    // });
+
+    // var connect = new imgSteam.http.Connect(streamOption);
+    // Picker.middleware(connect.getHandler());
+    //
+    // connect.on('error', function (err) {
+    //     console.error("ImageStream error", err);
+    // });
+
+    // https://docs.meteor.com/packages/webapp.html
+    WebApp.connectHandlers.use(function (req, res, next) {
         console.log('Debug: \nurl=', req.url, "\noriginalUrl=", req.originalUrl);
         next()
     });
 
     var connect = new imgSteam.http.Connect(streamOption);
-    Picker.middleware(connect.getHandler());
-
-    connect.on('error', function (err) {
-        console.error("ImageStream error", err);
-    });
+    WebApp.connectHandlers.use(connect.getHandler());
 })
+
